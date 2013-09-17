@@ -499,7 +499,7 @@ int spi_start(char* chipconf,char* chipfast)
 			int c,i=0;
 			for(c=maxchips;c<maxchips+BANKCHIPS && c<MAXCHIPS;c++,i++){
 				//chipspis[c]=int(1000000.0/(100.0*b+50.0*(i+1)))*1000;}
-				chipspis[c]=256000;}
+				chipspis[c]=625000;}
 			spi_programm(chipconf,chipfast,b,maxchips,maxchips+BANKCHIPS);}
 		spi_reset(0,b);
 		spi_reset(8,0);}
