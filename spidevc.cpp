@@ -181,7 +181,7 @@ Physical addresses range from 0x20000000 to 0x20FFFFFF for peripherals. The bus 
 
 	for(bank=0;bank<=MAXBANKS;bank++){
 		if(boff[bank]){
-			spi_reset(8,bank);
+			spi_reset(64,bank);
 			break;}}
 	assert(bank<=MAXBANKS);
         for(;bufsz>0;bufsz-=tr.len,wrbuf+=tr.len,rdbuf+=tr.len,pos+=tr.len) {
@@ -191,7 +191,7 @@ Physical addresses range from 0x20000000 to 0x20FFFFFF for peripherals. The bus 
 		if(pos==boff[bank]){
 			for(;++bank<=MAXBANKS;){
 				if(boff[bank]>pos){
-					spi_reset(8,bank);
+					spi_reset(64,bank);
 					break;}}}
 		if(bufsz<SPIBUF){
 			tr.len=bufsz;}
