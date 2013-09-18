@@ -501,7 +501,7 @@ int spi_start(char* chipconf,char* chipfast)
 				//chipspis[c]=int(1000000.0/(100.0*b+50.0*(i+1)))*1000;}
 				chipspis[c]=625000;}
 			spi_programm(chipconf,chipfast,b,maxchips,maxchips+BANKCHIPS);}
-		spi_reset(0,b);
+		spi_reset(64,b);
 		spi_reset(8,0);}
 #endif
 	memcpy(oldconf,chipconf,MAXCHIPS);
