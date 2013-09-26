@@ -139,9 +139,14 @@ void spi_reset(int max,int bank)
 			INP_GPIO(banks[i]);
 			OUT_GPIO(banks[i]);
 			if(i+1==bank){
-				GPIO_SET = 1 << banks[i];} // enable bank
+				GPIO_SET = 1 << banks[i];
+			} // enable bank
 			else{
-				GPIO_CLR = 1 << banks[i];}}} // disable bank
+				GPIO_CLR = 1 << banks[i];
+			}
+		}
+		usleep(4096);
+	} // disable bank
 	else{
 		for(i=0;i<4;i++){
 			INP_GPIO(banks[i]);}}
@@ -500,9 +505,8 @@ int spi_start(char* chipconf,char* chipfast)
 			for(c=maxchips;c<maxchips+BANKCHIPS && c<MAXCHIPS;c++,i++){
 				//chipspis[c]=int(1000000.0/(100.0*b+50.0*(i+1)))*1000;}
 				chipspis[c]=625000;}
-			spi_reset(64,b);
 			spi_programm(chipconf,chipfast,b,maxchips,maxchips+BANKCHIPS);}
-		spi_reset(0,b);
+		spi_reset(64,b);
 		spi_reset(8,0);}
 #endif
 	memcpy(oldconf,chipconf,MAXCHIPS);
@@ -532,13 +536,13 @@ void SpitalkThread::Run()
 			wait=1000000*(stop.tv_sec-start.tv_sec)+stop.tv_usec-start.tv_usec;
 			if(start.tv_sec && wait>1600000){
 				printf("SPI WAITING %.3f sec\r",(float)wait/1000000.0);}
-			threads_sleep(100);
+			threads_sleep(10);
 			continue;}
 		spi_txrx((const char*)spibufwr[talk],(char*)spibufrd[talk],spibufsz[talk],(const unsigned int*)chipoff[talk],(const unsigned int*)bankoff[talk]);
 		gettimeofday(&stop,NULL);
 		wait=1000000*(stop.tv_sec-start.tv_sec)+stop.tv_usec-start.tv_usec;
-		if(wait<800000){
-			threads_sleep((800000-wait)/1000);}
+		if(wait<200000){
+			threads_sleep((200000-wait)/1000);}
 		if(wait>1600000){
 			printf("SPI SENDING %.3f sec\n",(float)wait/1000000.0);}
 #ifndef NDEBUG
